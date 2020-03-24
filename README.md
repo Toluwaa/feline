@@ -1,2 +1,2 @@
 # feline
-# Feline keeps my codes on data structures and algorithms
+# Holds my solutions for problems on data structures and algorithms
