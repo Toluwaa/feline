@@ -8,16 +8,40 @@ class SingleLinkedList:
         self.start = None
 
     def display_list(self):
-        pass
+        if self.start is None:
+            print("List is empty")
+        else:
+            print("The list is ")
+            p = self.start
+            while p is not None:
+                print(p.info, " ", end=" ")
+                p = p.link
+
+            print()
 
     def count_nodes(self):
-        pass
+            p = self.start
+            n = 0
+            while p is not None:
+                n += 1
+                p = p.links
+            print("Number of nodes = %s nodes" % n)
     
     def create_list(self):
         pass
 
     def search(self, x):
-        pass
+        position = 1
+        p = self.start
+        while p is not None:
+            if p.info == x:
+                print(x, "is at position", position)
+                return True
+            position += 1
+            p = p.link
+        else:
+            print(x, " not found in list")
+            return False
 
     def insert_at_beginning(self, data):
         pass
