@@ -24,11 +24,17 @@ class SingleLinkedList:
             n = 0
             while p is not None:
                 n += 1
-                p = p.links
+                p = p.link   
             print("Number of nodes = %s nodes" % n)
     
     def create_list(self):
-        pass
+        n = int(input("Enter the number of nodes: "))
+        if n == 0:
+            print("Looks like you don't really want to create a list. You just entered zero")
+        else:
+            for each in range(n):
+                data = int(input("Enter the element to be inserted: "))
+                self.insert_at_end(data)
 
     def search(self, x):
         position = 1
@@ -44,31 +50,135 @@ class SingleLinkedList:
             return False
 
     def insert_at_beginning(self, data):
-        pass
+        new_node = Node(data)
+        new_node.link = self.start
+        self.start = new_node
 
     def insert_at_end(self, data):
-        pass
+        new_node = Node(data)
+        if self.start is None:
+            self.start = new_node
+        else:
+            p = self.start
+            while p.link is not None:
+                p = p.link
+            p.link = new_node
 
     def insert_before(self, data, x):
-        pass
+        if self.start is None:
+            print("The list is empty")
+            return
+        
+        p = self.start
+
+        if x == self.start.info:
+            new_node = Node(data)
+            new_node.link = self.start
+            self.start = new_node
+            return
+
+        while p.link is not None:
+            if p.link.info == x:
+                new_node = Node(data)
+                new_node.link = p.link
+                p.link = new_node
+                return
+            else:
+                p = p.link
+        else:
+            print(x, "is not available in list")
+
 
     def insert_after(self, data, x):
-        pass
+        if self.start is None:
+            print("The link is empty")
+            return
+        
+        p = self.start
+        
+        while p is not None:
+            if p.info == x:
+                new_node = Node(data)
+                new_node.link = p.link
+                p.link = new_node
+                return
+            else:
+                p = p.link
+        else:
+            print(x, "is not available in list")
 
     def insert_at_position(self, data, k):
-        pass
+        if k == 1:
+            new_node = Node(data)
+            new_node.link = self.start
+            self.start = new_node
+            return
+        
+        p = self.start
+        i = 1
+        while i < k-1 and p is not None:
+            p = p.link
+            i += 1
+        
+        if p is None:
+            print("You can insert only up to position", i)
+        else:
+            new_node = Node(data)
+            new_node.link = p.link
+            p.link = new_node
 
     def delete_node(self, x):
-        pass
+        if self.start is None:
+            print("Link is empty")
+        
+        # Deletion of first node
+        if self.start.info == x:
+            self.start = self.start.link
+            return
+        
+        p = self.start
+
+        # Deletion within nodes or at the end of link
+        while p.link is not None:
+            if p.link.info == x:
+                p.link = p.link.link
+                return
+            p = p.link
+        else:
+            print("Element", x, "not in list")
 
     def delete_first_node(self):
-        pass
+        if self.start is None:
+            print("List is empty")
+            return
+
+        self.start = self.start.link
 
     def delete_last_node(self):
-        pass
+        if self.start is None:
+            print("List is empty")
+            return
+        
+        if self.start.link == None:
+            self.start = None
+            return
+
+        p = self.start
+        while p.link.link is not None:
+            p = p.link
+
+        p.link = None
 
     def reverse_list(self):
-        pass
+        prev = None
+        p = self.start
+
+        while p is not None:
+            next = p.link
+            p.link = prev
+            prev = p
+            p = next
+        self.start = prev
 
     def bubble_sort_by_data(self):
         pass
@@ -96,7 +206,6 @@ class SingleLinkedList:
 
     def _divide_list(self, p):
         pass
-
 
 ############################################################################################################
 
@@ -162,7 +271,7 @@ while True:
 
     elif option == 9:
         data = int(input("Enter the element to be deleted: "))
-        list_a.delete_node()
+        list_a.delete_node(data)
 
     elif option == 10:
         list_a.delete_first_node()
