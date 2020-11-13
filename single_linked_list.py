@@ -214,16 +214,81 @@ class SingleLinkedList:
             end = p
 
     def has_cycle(self):
-        pass
+        if self.find_cycle() is None:
+            return False
+        else:
+            return True
 
     def find_cycle(self):
-        pass
+        # Using hare and tortoise algorithm a.k.a floyd's cycle detection algorithm
+        if self.start is None or self.start.link is None:
+            return None
+        
+        hare = self.start
+        tortoise = self.start
+
+        while hare is not None and hare.link is not None:
+            hare = hare.link.link
+            tortoise = tortoise.link
+
+            if hare == tortoise:
+                return tortoise
+
+        return None
 
     def insert_cycle(self, data):
-        pass
+        if self.start is None:
+            return
+        
+        p = self.start
+        px = None
+
+        while p is not None:
+            if p.info == data:
+                px = p
+            prev = p
+            p = p.link
+        
+        if px is not None:
+            prev.link = px
+        else:
+            print(data, "not present in list")
 
     def remove_cycle(self):
-        pass
+        cycle_node = self.find_cycle() # Cycle node is where the cycle was detected
+        if cycle_node == None:
+            return
+        print("The node at which the cycle was detected is", cycle_node)
+
+        p, q = cycle_node, cycle_node
+        len_cycle = 0  # Length of cycle
+
+        while True:
+            q = q.link
+            len_cycle += 1
+            if p == q:
+                break
+        
+        print("The length of the cycle is ", len_cycle)
+
+        len_rem_list = 0
+        p = self.start
+        while p != q:
+            p = p.link
+            q = q.link
+            len_rem_list += 1
+        
+        print("Number of nodes not included in the cycle is", len_rem_list)
+
+        len_list = len_cycle + len_rem_list
+        print("Number of nodes in the list is ", len_list)
+
+        p = self.start
+        for  i in range(len_list - 1):
+            p = p.link
+        
+        p.link = None
+
 
     def merge_link(self, list2):
         merge_list = SingleLinkedList()
