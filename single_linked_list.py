@@ -181,10 +181,37 @@ class SingleLinkedList:
         self.start = prev
 
     def bubble_sort_by_data(self):
-        pass
+        end = None
+
+        while end != self.start.link:
+            p = self.start
+            while p.link != end:
+                q = p.link
+                if p.info > q.info:
+                    p.info, q.info = q.info, p.info
+                p = p.link
+            end = p
 
     def bubble_sort_by_links(self):
-        pass
+        end = None
+        while end != self.start.link:
+            r = p = self.start
+            while p.link != end:
+                q = p.link
+                if p.info > q.info:
+                    p.link = q.link
+                    q.link = p
+
+                    if p != self.start:
+                        r.link = q
+                    else:
+                        self.start = q
+                    
+                    p, q = q, p
+                r = p
+                p = p.link
+            
+            end = p
 
     def has_cycle(self):
         pass
@@ -198,118 +225,184 @@ class SingleLinkedList:
     def remove_cycle(self):
         pass
 
-    def merge_sort(self, list2):
-        pass
+    def merge_link(self, list2):
+        merge_list = SingleLinkedList()
+        merge_list.start = self._merge_link(self.start, list2.start)
+        return merge_list
 
-    def _merge_sort(self, p1, p2):
-        pass
+    def _merge_link(self, p1, p2):
+        if p1.info <= p2.info:
+            new_list = Node(p1.info) # The linkedlist has just a node at the beginning
+            p1 = p1.link
+        else:
+            new_list = Node(p2.info) # The linkedlist has just a node at the beginning
+            p2 = p2.link
+        
+        ref_node = new_list
+
+        while p1 is not None and p2 is not None:
+            if p1.info <= p2.info:
+                ref_node.link = Node(p1.info)
+                p1 = p1.link
+            else:
+                ref_node.link = Node(p2.info)
+                p2 = p2.link
+            
+            ref_node = ref_node.link
+
+        
+        while p1 is not None:
+            ref_node.link = Node(p1.info)
+            p1 = p1.link
+            ref_node = ref_node.link
+
+        while p2 is not None:
+            ref_node.link = Node(p2.info)
+            p2 = p2.link
+            ref_node = ref_node.link
+            
+        return new_list
+
+    def merge_link2(self, list2):
+        merge_list = SingleLinkedList()
+        merge_list.start = self._merge_link2(self.start, list2.start)
+        return merge_list
+
+    def _merge_link2(self, p1, p2):
+        if p1.info <= p2.info:
+            start_node = p1
+            p1 = p1.link
+        else:
+            start_node = p2
+            p2 = p2.link
+
+        ref_node = start_node
+
+        while p1 is not None and p2 is not None:
+            if p1.info <= p2.info:
+                ref_node.link = p1
+                ref_node = ref_node.link
+                p1 = p1.link
+            else:
+                ref_node.link = p2
+                ref_node = ref_node.link
+                p2 = p2.link
+
+        if p1 is None:
+            ref_node.link = p2
+        else:
+            ref_node =  p1
+
+        return start_node
+
 
     def _divide_list(self, p):
         pass
 
 ############################################################################################################
 
-list_a = SingleLinkedList()
-list_a.create_list()
+if __name__ == "__main__":
+    list_a = SingleLinkedList()
+    list_a.create_list()
 
-while True:
-    print("1: Display list")
-    print("2: Count the number of nodes")
-    print("3: Search for an element")
-    print("4: Insert a node in empty list or at the beginning of the list")
-    print("5: Insert a node at the end of the list")
-    print("6: Insert a node before a specified node")
-    print("7: Insert a node after a specified node")
-    print("8: Insert a node at a given position")
-    print("9: Delete any node")
-    print("10: Delete first node")
-    print("11: Delete last node")
-    print("12: Reverse the list")
-    print("13: Bubble sort by exchanging data")
-    print("14: Bubble sort by exchanging links")
-    print("15: Merge sort")
-    print("16: Detect cycle")
-    print("17: Find cycle")
-    print("18: Insert cycle")
-    print("19: Remove cycle")
-    print("20: Quit")
+    while True:
+        print("1: Display list")
+        print("2: Count the number of nodes")
+        print("3: Search for an element")
+        print("4: Insert a node in empty list or at the beginning of the list")
+        print("5: Insert a node at the end of the list")
+        print("6: Insert a node before a specified node")
+        print("7: Insert a node after a specified node")
+        print("8: Insert a node at a given position")
+        print("9: Delete any node")
+        print("10: Delete first node")
+        print("11: Delete last node")
+        print("12: Reverse the list")
+        print("13: Bubble sort by exchanging data")
+        print("14: Bubble sort by exchanging links")
+        print("15: Merge sort")
+        print("16: Detect cycle")
+        print("17: Find cycle")
+        print("18: Insert cycle")
+        print("19: Remove cycle")
+        print("20: Quit")
 
-    option = int(input("Enter your choice: "))
+        option = int(input("Enter your choice: "))
 
-    if option == 1:
-        list_a.display_list()
+        if option == 1:
+            list_a.display_list()
 
-    elif option == 2:
-        list_a.count_nodes()
-    
-    elif option == 3:
-        data = int(input("Enter the element to be searched: "))
-        list_a.search(data)
+        elif option == 2:
+            list_a.count_nodes()
+        
+        elif option == 3:
+            data = int(input("Enter the element to be searched: "))
+            list_a.search(data)
 
-    elif option == 4:
-        data = int(input("Enter the element to be inserted: "))
-        list_a.insert_at_beginning(data)
+        elif option == 4:
+            data = int(input("Enter the element to be inserted: "))
+            list_a.insert_at_beginning(data)
 
-    elif option == 5:
-        data = int(input("Enter the element to be inserted: "))
-        list_a.insert_at_end(data)
-    
-    elif option == 6:
-        x = int(input("Enter the element before which to insert: "))
-        data = int(input("Enter the element to be inserted: "))
-        list_a.insert_before(data, x)
+        elif option == 5:
+            data = int(input("Enter the element to be inserted: "))
+            list_a.insert_at_end(data)
+        
+        elif option == 6:
+            x = int(input("Enter the element before which to insert: "))
+            data = int(input("Enter the element to be inserted: "))
+            list_a.insert_before(data, x)
 
-    elif option == 7:
-        x = int(input("Enter the element after which to insert: "))
-        data = int(input("Enter the element to be inserted: "))
-        list_a.insert_after(data, x)
+        elif option == 7:
+            x = int(input("Enter the element after which to insert: "))
+            data = int(input("Enter the element to be inserted: "))
+            list_a.insert_after(data, x)
 
-    elif option == 8:
-        data = int(input("Enter the element to be inserted: "))
-        k = int(input("Enter the position at which to insert: "))
-        list_a.insert_at_position(data, k)
+        elif option == 8:
+            data = int(input("Enter the element to be inserted: "))
+            k = int(input("Enter the position at which to insert: "))
+            list_a.insert_at_position(data, k)
 
-    elif option == 9:
-        data = int(input("Enter the element to be deleted: "))
-        list_a.delete_node(data)
+        elif option == 9:
+            data = int(input("Enter the element to be deleted: "))
+            list_a.delete_node(data)
 
-    elif option == 10:
-        list_a.delete_first_node()
-    
-    elif option == 11:
-        list_a.delete_last_node()
+        elif option == 10:
+            list_a.delete_first_node()
+        
+        elif option == 11:
+            list_a.delete_last_node()
 
-    elif option == 12:
-        list_a.reverse_list()
-    
-    elif option == 13:
-        list_a.bubble_sort_by_data()
+        elif option == 12:
+            list_a.reverse_list()
+        
+        elif option == 13:
+            list_a.bubble_sort_by_data()
 
-    elif option == 14:
-        list_a.bubble_sort_by_links()
+        elif option == 14:
+            list_a.bubble_sort_by_links()
 
-    elif option == 15:
-        list_a.merge_sort()
-    
-    elif option == 16:
-        if list_a.has_cycle():
-            print("Link has a cycle")
+        elif option == 15:
+            list_a.merge_sort()
+        
+        elif option == 16:
+            if list_a.has_cycle():
+                print("Link has a cycle")
+            else:
+                print("Link does not have a cycle")
+        
+        elif option == 17:
+            list_a.find_cycle()
+
+        elif option == 18:
+            data  = int(input("Enter the element at which the cycle has to be inserted: "))
+            list_a.insert_cycle(data)
+        
+        elif option == 19:
+            list_a.remove_cycle()
+        
+        elif option == 20:
+            break
         else:
-            print("Link does not have a cycle")
-    
-    elif option == 17:
-        list_a.find_cycle()
-
-    elif option == 18:
-        data  = int(input("Enter the element at which the cycle has to be inserted: "))
-        list_a.insert_cycle(data)
-    
-    elif option == 19:
-        list_a.remove_cycle()
-    
-    elif option == 20:
-        break
-    else:
-        print("Wrong Option")
-    
-    print()
+            print("Wrong Option")
+        
+        print()
